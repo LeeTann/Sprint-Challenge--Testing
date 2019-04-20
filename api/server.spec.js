@@ -23,7 +23,7 @@ describe('GET "/games" endpoint testing', () => {
     })
 })
 
-describe('POST "/games" enpoint testing', () => {
+describe('POST "/games" endpoint testing', () => {
 
     it('should return status code 201', async () => {
         const newGame = { games: 'Punch Out', genre: 'fighting' }
@@ -44,5 +44,29 @@ describe('POST "/games" enpoint testing', () => {
         const res = await request(server).post('/games').send(newGame)
 
         expect(res.status).toBe(422)
+    })
+})
+
+describe('GetByID "/games/:id" endpoint testing', () => {
+
+    it('should return status code 200', async () => {
+        const res = await request(server).get('/games/1')
+
+        expect(res.status).toBe(200)
+    })
+})
+
+describe('DELETE "/games/:id" endpoint testing', () => {
+
+    it('should return the item number deleted', async () => {
+        const res = await request(server).delete('/games/1')
+
+        expect(res.body).toBe(0)
+    })
+
+    it('should return status code 200', async () => {
+        const res = await request(server).delete('/games/1')
+
+        expect(res.status).toBe(200)
     })
 })

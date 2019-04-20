@@ -25,4 +25,25 @@ server.post('/games', async (req, res) => {
     }
 })
 
+server.get('/games/:id', async (req, res) => {
+    const id = req.params.id
+
+    try {
+        const result = await db('games').where({id})
+        if (result) {
+            res.status(200).json(result)
+        } else {
+            res.status(400).json({ messaage: 'no specific id found'})
+        }
+    } catch(error) {
+        res.status(500).json(error)
+    }
+})
+
+server.delete('/games/:id', async (req, res) => {
+    const id = req.params.id
+    const result = await db('games').where({id}).delete()
+
+    res.status(200).json(result)
+})
 module.exports = server
