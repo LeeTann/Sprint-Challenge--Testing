@@ -14,4 +14,15 @@ server.get('/games', async (req, res) => {
     res.status(200).json(games)
 })
 
+server.post('/games', async (req, res) => {
+    const { games, genre } = req.body
+
+    if (games && genre) {
+        const result = await db('games').insert(req.body)
+        res.status(201).json(result)
+    } else {
+        res.status(422).json({ message: 'Come on man! we are missing info'})
+    }
+})
+
 module.exports = server

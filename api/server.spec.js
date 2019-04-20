@@ -22,3 +22,27 @@ describe('GET "/games" endpoint testing', () => {
         expect(Array.isArray(res.body)).toBeTruthy()
     })
 })
+
+describe('POST "/games" enpoint testing', () => {
+
+    it('should return status code 201', async () => {
+        const newGame = { games: 'Punch Out', genre: 'fighting' }
+        const res = await request(server).post('/games').send(newGame)
+
+        expect(res.status).toBe(201)
+    })
+
+    it('should return JSON', async () => {
+        const newGame = { games: 'Final Fantasy 7', genre: 'RPG' }
+        const res = await request(server).post('/games').send(newGame)
+
+        expect(res.type).toBe('application/json')
+    })
+
+    it('should return status code 422', async () => {
+        const newGame = { games: 'Donkey Kong' }
+        const res = await request(server).post('/games').send(newGame)
+
+        expect(res.status).toBe(422)
+    })
+})
